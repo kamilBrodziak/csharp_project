@@ -88,12 +88,6 @@ GO
 
 
 
-CREATE PROCEDURE getBook
-	@ID int
-AS
-	SELECT * FROM Book WHERE ID = @ID;
-GO
-
 CREATE PROCEDURE addBook
 	@Title varchar(200),
 	@ReleaseDate date,
@@ -127,12 +121,6 @@ GO
 
 
 
-CREATE PROCEDURE getAuthor
-	@ID int
-AS
-	SELECT * FROM Author WHERE ID = @ID;
-GO
-
 CREATE PROCEDURE addAuthor
 	@FirstName varchar(50),
 	@LastName varchar(50),
@@ -162,12 +150,6 @@ GO
 
 
 
-CREATE PROCEDURE getGenre
-	@ID int
-AS
-	SELECT * FROM Genre WHERE ID = @ID;
-GO
-
 CREATE PROCEDURE addGenre
 	@Name varchar(50)
 AS
@@ -192,22 +174,6 @@ AS
 GO
 
 
-
-CREATE PROCEDURE getAuthorBooks
-	@AuthorID int
-AS
-	SELECT b.ID, b.Title, b.ReleaseDate, b.Pages, b.GenreID, b.Price FROM 
-	(SELECT * FROM AuthorBook WHERE AuthorID = @AuthorID) AS a
-	LEFT JOIN Book AS b on a.BookID = b.ID
-GO
-
-CREATE PROCEDURE getBookAuthors
-	@BookID int
-AS
-	SELECT b.ID, b.FirstName, b.LastName, b.Email FROM
-	(SELECT * FROM AuthorBook WHERE BookID = @BookID) AS a
-	LEFT JOIN Author AS b ON a.AuthorID = b.ID
-GO
 
 CREATE PROCEDURE addAuthorBook
 	@AuthorID int,
