@@ -1,4 +1,8 @@
-﻿DROP DATABASE IF EXISTS BookCatalog
+﻿USE master
+GO
+ALTER DATABASE BookCatalog SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+GO
+DROP DATABASE IF EXISTS BookCatalog
 GO
 
 CREATE DATABASE BookCatalog
@@ -33,7 +37,6 @@ CREATE TABLE Book (
 GO
 
 CREATE TABLE AuthorBook (
-	ID int IDENTITY(1,1) PRIMARY KEY,
 	AuthorID int NOT NULL FOREIGN KEY REFERENCES Author(ID),
 	BookID int NOT NULL FOREIGN KEY REFERENCES Book(ID)
 )
@@ -85,6 +88,12 @@ GO
 
 
 
+CREATE PROCEDURE getBook
+	@ID int
+AS
+	SELECT * FROM Book WHERE ID = @ID;
+GO
+
 CREATE PROCEDURE addBook
 	@Title varchar(200),
 	@ReleaseDate date,
@@ -92,7 +101,7 @@ CREATE PROCEDURE addBook
 	@GenreID int,
 	@Price decimal(9,4)
 AS
-	INSERT INTO Movie(Title, ReleaseDate, Pages, GenreID, Price) VALUES
+	INSERT INTO Book(Title, ReleaseDate, Pages, GenreID, Price) VALUES
 		(@Title, @ReleaseDate, @Pages, @GenreID, @Price)
 GO
 
@@ -104,7 +113,7 @@ CREATE PROCEDURE updateBook
 	@GenreID int,
 	@Price decimal(9,4)
 AS
-	UPDATE Movie
+	UPDATE Book
 	SET Title = @Title, ReleaseDate = @ReleaseDate, Pages = @Pages, GenreID = @GenreID, Price = @Price
 	WHERE ID = @ID
 GO
@@ -112,11 +121,17 @@ GO
 CREATE PROCEDURE deleteBook
 	@ID int
 AS
-	DELETE Movie
+	DELETE Book
 	WHERE ID = @ID
 GO
 
 
+
+CREATE PROCEDURE getAuthor
+	@ID int
+AS
+	SELECT * FROM Author WHERE ID = @ID;
+GO
 
 CREATE PROCEDURE addAuthor
 	@FirstName varchar(50),
@@ -147,6 +162,12 @@ GO
 
 
 
+CREATE PROCEDURE getGenre
+	@ID int
+AS
+	SELECT * FROM Genre WHERE ID = @ID;
+GO
+
 CREATE PROCEDURE addGenre
 	@Name varchar(50)
 AS
@@ -172,6 +193,22 @@ GO
 
 
 
+CREATE PROCEDURE getAuthorBooks
+	@AuthorID int
+AS
+	SELECT b.ID, b.Title, b.ReleaseDate, b.Pages, b.GenreID, b.Price FROM 
+	(SELECT * FROM AuthorBook WHERE AuthorID = @AuthorID) AS a
+	LEFT JOIN Book AS b on a.BookID = b.ID
+GO
+
+CREATE PROCEDURE getBookAuthors
+	@BookID int
+AS
+	SELECT b.ID, b.FirstName, b.LastName, b.Email FROM
+	(SELECT * FROM AuthorBook WHERE BookID = @BookID) AS a
+	LEFT JOIN Author AS b ON a.AuthorID = b.ID
+GO
+
 CREATE PROCEDURE addAuthorBook
 	@AuthorID int,
 	@BookID int
@@ -181,18 +218,20 @@ AS
 GO
 
 CREATE PROCEDURE updateAuthorBook
-	@ID int,
+	@oldAuthorID int,
+	@oldBookID int,
 	@AuthorID int,
 	@BookID int
 AS
 	UPDATE AuthorBook
 	SET AuthorID = @AuthorID, BookID = @BookID
-	WHERE ID = @ID
+	WHERE AuthorID = @oldAuthorID and BookID = @oldBookID
 GO
 
 CREATE PROCEDURE deleteAuthorBook
-	@ID int
+	@AuthorID int,
+	@BookID int
 AS
 	DELETE AuthorBook
-	WHERE ID = @ID
+	WHERE AuthorID = @AuthorID and BookID = @BookID
 GO
