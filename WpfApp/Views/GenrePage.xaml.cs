@@ -20,10 +20,9 @@ namespace WpfApp.Views {
     /// </summary>
     public partial class GenrePage : Page {
         CollectionViewSource _viewSource;
-        BookCatalogEntities _context;
-        public GenrePage(BookCatalogEntities context) {
+        BookCatalogEntities _context = new BookCatalogEntities();
+        public GenrePage() {
             InitializeComponent();
-            _context = context;
             _viewSource = ((CollectionViewSource)(FindResource("genreViewSource")));
         }
 

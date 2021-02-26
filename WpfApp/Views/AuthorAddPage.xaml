@@ -1,0 +1,45 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp.Views"
+      xmlns:WpfApp="clr-namespace:WpfApp" x:Class="WpfApp.Views.AuthorAddPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AuthorAddPage">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="authorViewSource" d:DesignSource="{d:DesignInstance {x:Type WpfApp:Author}, CreateList=True}"/>
+    </Page.Resources>
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{StaticResource authorViewSource}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label FontSize="20" VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="First Name:"/>
+            <TextBox FontSize="20" x:Name="firstNameTextBox" Width="200" VerticalAlignment="Center" Text="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="30" HorizontalAlignment="Left" Grid.Column="1"/>
+            <Label FontSize="20" VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Last Name:"/>
+            <TextBox FontSize="20" x:Name="lastNameTextBox" Width="200" VerticalAlignment="Center" Text="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" Height="30" HorizontalAlignment="Left" Grid.Column="1"/>
+            <Label VerticalAlignment="Center" Grid.Row="3" Margin="2" HorizontalAlignment="Left" Grid.Column="0" Content="Email:" FontSize="20"/>
+            <TextBox FontSize="20" x:Name="emailTextBox" Width="200" VerticalAlignment="Center" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="30" HorizontalAlignment="Left" Grid.Column="1"/>
+        </Grid>
+        <TextBlock x:Name="saveInfo" Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Center" Width="auto"/>
+        <Button x:Name="addAuthorButton" Content="Add" Grid.Column="0" Grid.Row="2" FontSize="30" Click="addAuthorButton_Click" />
+    </Grid>
+</Page>

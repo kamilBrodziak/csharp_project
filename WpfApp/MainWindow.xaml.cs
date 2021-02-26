@@ -29,16 +29,16 @@ namespace WpfApp {
         }
 
         private void authorButton_Click(object sender, RoutedEventArgs e) {
-            mainFrame.Navigate(new AuthorPage(_context));
+            mainFrame.Navigate(new AuthorPage());
         }
 
         private void bookButton_Click(object sender, RoutedEventArgs e) {
-            mainFrame.Navigate(new BookPage(_context));
+            mainFrame.Navigate(new BookPage());
 
         }
 
         private void genreButton_Click(object sender, RoutedEventArgs e) {
-            mainFrame.Navigate(new GenrePage(_context));
+            mainFrame.Navigate(new GenrePage());
         }
     }
 }

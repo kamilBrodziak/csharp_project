@@ -16,28 +16,37 @@ using System.Data.Entity;
 
 namespace WpfApp.Views {
     /// <summary>
-    /// Interaction logic for AuthorPage.xaml
+    /// Interaction logic for AuthorAddPage.xaml
     /// </summary>
-    public partial class AuthorPage : Page {
+    public partial class AuthorAddPage : Page {
         CollectionViewSource _viewSource;
         BookCatalogEntities _context = new BookCatalogEntities();
-        public AuthorPage() {
+        public AuthorAddPage() {
             InitializeComponent();
-            _viewSource = ((CollectionViewSource)(FindResource("authorViewSource")));
         }
 
         private void PageLoaded(object sender, RoutedEventArgs e) {
-            _context.Authors.Load();
             _viewSource.Source = _context.Authors.Local;
         }
 
         private void addAuthorButton_Click(object sender, RoutedEventArgs e) {
-            this.NavigationService.Navigate(new AuthorAddPage());
-        }
-
-        private void detailsButton_Click(object sender, RoutedEventArgs e) {
-            int id = (int)((Button)sender).DataContext;
-            this.NavigationService.Navigate(new AuthorDetailsPage(id));
+            saveInfo.Text = "";
+            if(lastNameTextBox.Text == "" || firstNameTextBox.Text == "") {
+                saveInfo.Text = "First and last name must be specified!";
+                return;
+            }
+            Author author = new Author {
+                Email = emailTextBox.Text,
+                FirstName = firstNameTextBox.Text,
+                LastName = lastNameTextBox.Text
+            };
+            try {
+                _context.Authors.Add(author);
+                _context.SaveChanges();
+                saveInfo.Text = "Succesfully added";
+            } catch(Exception ex) {
+                saveInfo.Text = ex.Message;
+            }
         }
     }
 }

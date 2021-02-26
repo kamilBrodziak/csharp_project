@@ -32,13 +32,13 @@
                 <DataGridTemplateColumn x:Name="detailsColumn" Width="1*" Header="Details">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="detailsButton" DataContext="{Binding ID}" Content="Check"/>
+                            <Button x:Name="detailsButton" DataContext="{Binding ID}" Content="Check" Click="detailsButton_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="1" Grid.Column="0"  x:Name="addAuthorButton" Content="Add" FontSize="20px" FontWeight="Bold"/>
+        <Button Grid.Row="1" Grid.Column="0" x:Name="addAuthorButton" Content="Add" FontSize="20px" FontWeight="Bold" Click="addAuthorButton_Click"/>
 
     </Grid>
 </Page>
