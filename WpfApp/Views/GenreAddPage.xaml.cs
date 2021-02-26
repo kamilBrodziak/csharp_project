@@ -16,27 +16,25 @@ using System.Data.Entity;
 
 namespace WpfApp.Views {
     /// <summary>
-    /// Interaction logic for AuthorAddPage.xaml
+    /// Interaction logic for GenreAddPage.xaml
     /// </summary>
-    public partial class AuthorAddPage : Page {
+    public partial class GenreAddPage : Page {
         BookCatalogEntities _context = new BookCatalogEntities();
-        public AuthorAddPage() {
+        public GenreAddPage() {
             InitializeComponent();
         }
 
-        private void addAuthorButton_Click(object sender, RoutedEventArgs e) {
+        private void addGenreButton_Click(object sender, RoutedEventArgs e) {
             saveInfo.Text = "";
-            if(lastNameTextBox.Text == "" || firstNameTextBox.Text == "") {
-                saveInfo.Text = "First and last name must be specified!";
+            if(nameTextBox.Text == "") {
+                saveInfo.Text = "Name must be specified!";
                 return;
             }
-            Author author = new Author {
-                Email = emailTextBox.Text,
-                FirstName = firstNameTextBox.Text,
-                LastName = lastNameTextBox.Text
+            Genre genre = new Genre {
+                Name = nameTextBox.Text
             };
             try {
-                _context.Authors.Add(author);
+                _context.Genres.Add(genre);
                 _context.SaveChanges();
                 saveInfo.Text = "Succesfully added";
             } catch(Exception ex) {

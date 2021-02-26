@@ -30,5 +30,14 @@ namespace WpfApp.Views {
             _context.Genres.Load();
             _viewSource.Source = _context.Genres.Local;
         }
+
+        private void detailsButton_Click(object sender, RoutedEventArgs e) {
+            int id = (int)((Button)sender).DataContext;
+            this.NavigationService.Navigate(new GenreDetailsPage(id));
+        }
+
+        private void addAuthorButton_Click(object sender, RoutedEventArgs e) {
+            this.NavigationService.Navigate(new GenreAddPage());
+        }
     }
 }
