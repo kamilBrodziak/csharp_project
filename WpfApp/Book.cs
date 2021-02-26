@@ -10,6 +10,7 @@
 namespace WpfApp
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
     public partial class Book
@@ -18,17 +19,18 @@ namespace WpfApp
         public Book()
         {
             this.Authors = new ObservableCollection<Author>();
+            this.Genres = new ObservableCollection<Genre>();
         }
     
         public int ID { get; set; }
         public string Title { get; set; }
         public Nullable<System.DateTime> ReleaseDate { get; set; }
         public Nullable<short> Pages { get; set; }
-        public Nullable<int> GenreID { get; set; }
         public Nullable<decimal> Price { get; set; }
     
-        public virtual Genre Genre { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<Author> Authors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ObservableCollection<Genre> Genres { get; set; }
     }
 }

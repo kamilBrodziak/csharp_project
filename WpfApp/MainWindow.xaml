@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="650"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <DockPanel Background="Gray" x:Name="mainDock" Grid.Column="0" Grid.Row="0" >
+            <StackPanel>
+                <Button x:Name="bookButton" Content="Books" Height="80" FontSize="20" FontWeight="Bold" Click="bookButton_Click"/>
+                <Button x:Name="authorButton" Content="Authors" Height="80" FontSize="20" FontWeight="Bold" Click="authorButton_Click"/>
+                <Button x:Name="genreButton" Content="Genres" Height="80" FontSize="20" FontWeight="Bold" Click="genreButton_Click"/>
+            </StackPanel>
+        </DockPanel>
+        <DockPanel Grid.Column="1" Grid.Row="0">
+            <Frame x:Name="mainFrame" />
+        </DockPanel>
     </Grid>
 </Window>

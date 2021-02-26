@@ -32,8 +32,17 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
           <Property Name="Title" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="ReleaseDate" Type="date" />
           <Property Name="Pages" Type="smallint" />
-          <Property Name="GenreID" Type="int" />
           <Property Name="Price" Type="decimal" Precision="9" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BookCatalog.dbo.BookGenre' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BookGenre">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="GenreID" />
+          </Key>
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="GenreID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Genre">
           <Key>
@@ -42,7 +51,7 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK__AuthorBoo__Autho__29572725">
+        <Association Name="FK__AuthorBoo__Autho__2B3F6F97">
           <End Role="Author" Type="Self.Author" Multiplicity="1" />
           <End Role="AuthorBook" Type="Self.AuthorBook" Multiplicity="*" />
           <ReferentialConstraint>
@@ -54,7 +63,7 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AuthorBoo__BookI__2A4B4B5E">
+        <Association Name="FK__AuthorBoo__BookI__2C3393D0">
           <End Role="Book" Type="Self.Book" Multiplicity="1" />
           <End Role="AuthorBook" Type="Self.AuthorBook" Multiplicity="*" />
           <ReferentialConstraint>
@@ -66,14 +75,26 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Book__GenreID__276EDEB3">
-          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
-          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+        <Association Name="FK__BookGenre__BookI__286302EC">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="BookGenre" Type="Self.BookGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BookGenre">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookGenre__Genre__29572725">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="BookGenre" Type="Self.BookGenre" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Genre">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Book">
+            <Dependent Role="BookGenre">
               <PropertyRef Name="GenreID" />
             </Dependent>
           </ReferentialConstraint>
@@ -91,8 +112,11 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
           <Parameter Name="Title" Type="varchar" Mode="In" />
           <Parameter Name="ReleaseDate" Type="date" Mode="In" />
           <Parameter Name="Pages" Type="smallint" Mode="In" />
-          <Parameter Name="GenreID" Type="int" Mode="In" />
           <Parameter Name="Price" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="addBookGenre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookID" Type="int" Mode="In" />
+          <Parameter Name="GenreID" Type="int" Mode="In" />
         </Function>
         <Function Name="addGenre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="varchar" Mode="In" />
@@ -106,6 +130,10 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
         </Function>
         <Function Name="deleteBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="deleteBookGenre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookID" Type="int" Mode="In" />
+          <Parameter Name="GenreID" Type="int" Mode="In" />
         </Function>
         <Function Name="deleteGenre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
@@ -127,8 +155,13 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
           <Parameter Name="Title" Type="varchar" Mode="In" />
           <Parameter Name="ReleaseDate" Type="date" Mode="In" />
           <Parameter Name="Pages" Type="smallint" Mode="In" />
-          <Parameter Name="GenreID" Type="int" Mode="In" />
           <Parameter Name="Price" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="updateBookGenre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="oldBookID" Type="int" Mode="In" />
+          <Parameter Name="oldGenreID" Type="int" Mode="In" />
+          <Parameter Name="BookID" Type="int" Mode="In" />
+          <Parameter Name="GenreID" Type="int" Mode="In" />
         </Function>
         <Function Name="updateGenre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
@@ -144,17 +177,27 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
     [AuthorBook].[BookID] AS [BookID]
     FROM [dbo].[AuthorBook] AS [AuthorBook]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__AuthorBoo__Autho__29572725" Association="Self.FK__AuthorBoo__Autho__29572725">
+          <EntitySet Name="BookGenre" EntityType="Self.BookGenre" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BookGenre].[BookID] AS [BookID], 
+    [BookGenre].[GenreID] AS [GenreID]
+    FROM [dbo].[BookGenre] AS [BookGenre]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__AuthorBoo__Autho__2B3F6F97" Association="Self.FK__AuthorBoo__Autho__2B3F6F97">
             <End Role="Author" EntitySet="Author" />
             <End Role="AuthorBook" EntitySet="AuthorBook" />
           </AssociationSet>
-          <AssociationSet Name="FK__AuthorBoo__BookI__2A4B4B5E" Association="Self.FK__AuthorBoo__BookI__2A4B4B5E">
+          <AssociationSet Name="FK__AuthorBoo__BookI__2C3393D0" Association="Self.FK__AuthorBoo__BookI__2C3393D0">
             <End Role="Book" EntitySet="Book" />
             <End Role="AuthorBook" EntitySet="AuthorBook" />
           </AssociationSet>
-          <AssociationSet Name="FK__Book__GenreID__276EDEB3" Association="Self.FK__Book__GenreID__276EDEB3">
-            <End Role="Genre" EntitySet="Genre" />
+          <AssociationSet Name="FK__BookGenre__BookI__286302EC" Association="Self.FK__BookGenre__BookI__286302EC">
             <End Role="Book" EntitySet="Book" />
+            <End Role="BookGenre" EntitySet="BookGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookGenre__Genre__29572725" Association="Self.FK__BookGenre__Genre__29572725">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="BookGenre" EntitySet="BookGenre" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -178,12 +221,11 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
+          <Property Name="ReleaseDate" Type="DateTime" />
           <Property Name="Pages" Type="Int16" />
-          <Property Name="GenreID" Type="Int32" />
           <Property Name="Price" Type="Decimal" Precision="9" Scale="2" />
-          <NavigationProperty Name="Genre" Relationship="Self.FK__Book__GenreID__276EDEB3" FromRole="Book" ToRole="Genre" />
           <NavigationProperty Name="Authors" Relationship="Self.AuthorBook" FromRole="Book" ToRole="Author" />
+          <NavigationProperty Name="Genres" Relationship="Self.BookGenre" FromRole="Book" ToRole="Genre" />
         </EntityType>
         <EntityType Name="Genre">
           <Key>
@@ -191,92 +233,28 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__Book__GenreID__276EDEB3" FromRole="Genre" ToRole="Book" />
+          <NavigationProperty Name="Books" Relationship="Self.BookGenre" FromRole="Genre" ToRole="Book" />
         </EntityType>
-        <Association Name="FK__Book__GenreID__276EDEB3">
-          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
-          <End Role="Book" Type="Self.Book" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genre">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Book">
-              <PropertyRef Name="GenreID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AuthorBook">
           <End Role="Author" Type="Self.Author" Multiplicity="*" />
           <End Role="Book" Type="Self.Book" Multiplicity="*" />
+        </Association>
+        <Association Name="BookGenre">
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <End Role="Genre" Type="Self.Genre" Multiplicity="*" />
         </Association>
         <EntityContainer Name="BookCatalogEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Authors" EntityType="Self.Author" />
           <EntitySet Name="Books" EntityType="Self.Book" />
           <EntitySet Name="Genres" EntityType="Self.Genre" />
-          <AssociationSet Name="FK__Book__GenreID__276EDEB3" Association="Self.FK__Book__GenreID__276EDEB3">
-            <End Role="Genre" EntitySet="Genres" />
-            <End Role="Book" EntitySet="Books" />
-          </AssociationSet>
           <AssociationSet Name="AuthorBook" Association="Self.AuthorBook">
             <End Role="Author" EntitySet="Authors" />
             <End Role="Book" EntitySet="Books" />
           </AssociationSet>
-          <FunctionImport Name="addAuthor">
-            <Parameter Name="FirstName" Mode="In" Type="String" />
-            <Parameter Name="LastName" Mode="In" Type="String" />
-            <Parameter Name="Email" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="addAuthorBook">
-            <Parameter Name="AuthorID" Mode="In" Type="Int32" />
-            <Parameter Name="BookID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="addBook">
-            <Parameter Name="Title" Mode="In" Type="String" />
-            <Parameter Name="ReleaseDate" Mode="In" Type="DateTime" />
-            <Parameter Name="Pages" Mode="In" Type="Int16" />
-            <Parameter Name="GenreID" Mode="In" Type="Int32" />
-            <Parameter Name="Price" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="addGenre">
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="deleteAuthor">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="deleteAuthorBook">
-            <Parameter Name="AuthorID" Mode="In" Type="Int32" />
-            <Parameter Name="BookID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="deleteBook">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="deleteGenre">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="updateAuthor">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
-            <Parameter Name="FirstName" Mode="In" Type="String" />
-            <Parameter Name="LastName" Mode="In" Type="String" />
-            <Parameter Name="Email" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="updateAuthorBook">
-            <Parameter Name="oldAuthorID" Mode="In" Type="Int32" />
-            <Parameter Name="oldBookID" Mode="In" Type="Int32" />
-            <Parameter Name="AuthorID" Mode="In" Type="Int32" />
-            <Parameter Name="BookID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="updateBook">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
-            <Parameter Name="Title" Mode="In" Type="String" />
-            <Parameter Name="ReleaseDate" Mode="In" Type="DateTime" />
-            <Parameter Name="Pages" Mode="In" Type="Int16" />
-            <Parameter Name="GenreID" Mode="In" Type="Int32" />
-            <Parameter Name="Price" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="updateGenre">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
+          <AssociationSet Name="BookGenre" Association="Self.BookGenre">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Genre" EntitySet="Genres" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -301,7 +279,6 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
                 <ScalarProperty Name="Pages" ColumnName="Pages" />
-                <ScalarProperty Name="GenreID" ColumnName="GenreID" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -322,18 +299,14 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
               <ScalarProperty Name="ID" ColumnName="BookID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="addAuthor" FunctionName="BookCatalogModel.Store.addAuthor" />
-          <FunctionImportMapping FunctionImportName="addAuthorBook" FunctionName="BookCatalogModel.Store.addAuthorBook" />
-          <FunctionImportMapping FunctionImportName="addBook" FunctionName="BookCatalogModel.Store.addBook" />
-          <FunctionImportMapping FunctionImportName="addGenre" FunctionName="BookCatalogModel.Store.addGenre" />
-          <FunctionImportMapping FunctionImportName="deleteAuthor" FunctionName="BookCatalogModel.Store.deleteAuthor" />
-          <FunctionImportMapping FunctionImportName="deleteAuthorBook" FunctionName="BookCatalogModel.Store.deleteAuthorBook" />
-          <FunctionImportMapping FunctionImportName="deleteBook" FunctionName="BookCatalogModel.Store.deleteBook" />
-          <FunctionImportMapping FunctionImportName="deleteGenre" FunctionName="BookCatalogModel.Store.deleteGenre" />
-          <FunctionImportMapping FunctionImportName="updateAuthor" FunctionName="BookCatalogModel.Store.updateAuthor" />
-          <FunctionImportMapping FunctionImportName="updateAuthorBook" FunctionName="BookCatalogModel.Store.updateAuthorBook" />
-          <FunctionImportMapping FunctionImportName="updateBook" FunctionName="BookCatalogModel.Store.updateBook" />
-          <FunctionImportMapping FunctionImportName="updateGenre" FunctionName="BookCatalogModel.Store.updateGenre" />
+          <AssociationSetMapping Name="BookGenre" TypeName="BookCatalogModel.BookGenre" StoreEntitySet="BookGenre">
+            <EndProperty Name="Book">
+              <ScalarProperty Name="ID" ColumnName="BookID" />
+            </EndProperty>
+            <EndProperty Name="Genre">
+              <ScalarProperty Name="ID" ColumnName="GenreID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -351,7 +324,6 @@ warning 6002: The table/view 'BookCatalog.dbo.AuthorBook' does not have a primar
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

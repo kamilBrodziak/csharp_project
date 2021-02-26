@@ -4,13 +4,6 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a2f82a01c751446480b58f7a14ef0b90" Name="Diagram1">
-        <EntityTypeShape EntityType="BookCatalogModel.Author" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookCatalogModel.Book" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookCatalogModel.Genre" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <AssociationConnector Association="BookCatalogModel.FK__Book__GenreID__276EDEB3" ManuallyRouted="false" />
-        <AssociationConnector Association="BookCatalogModel.AuthorBook" ManuallyRouted="false" />
-      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
