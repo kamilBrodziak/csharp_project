@@ -7,26 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfApp
+namespace WpfApp.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
-    public partial class Author
+    public partial class Book
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Author()
+        public Book()
         {
-            this.Books = new ObservableCollection<Book>();
+            this.Authors = new ObservableCollection<Author>();
+            this.Genres = new ObservableCollection<Genre>();
         }
     
         public int ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
+        public string Title { get; set; }
+        public Nullable<System.DateTime> ReleaseDate { get; set; }
+        public Nullable<short> Pages { get; set; }
+        public Nullable<decimal> Price { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ObservableCollection<Book> Books { get; set; }
+        public virtual ObservableCollection<Author> Authors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ObservableCollection<Genre> Genres { get; set; }
     }
 }

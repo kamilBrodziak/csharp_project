@@ -67,26 +67,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Author.cs">
+    <Compile Include="Models\Author.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="Book.cs">
+    <Compile Include="Models\Book.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="Genre.cs">
+    <Compile Include="Models\Genre.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models.Context.cs">
+    <Compile Include="Models\Models.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Models.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models.cs">
+    <Compile Include="Models\Models.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models.Designer.cs">
+    <Compile Include="Models\Models.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Models.edmx</DependentUpon>
@@ -99,6 +99,12 @@
     </Compile>
     <Compile Include="Views\AuthorPage.xaml.cs">
       <DependentUpon>AuthorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookAddPage.xaml.cs">
+      <DependentUpon>BookAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookDetailsPage.xaml.cs">
+      <DependentUpon>BookDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
@@ -133,6 +139,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AuthorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,11 +185,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Models.edmx">
+    <EntityDeploy Include="Models\Models.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Models.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models.edmx.diagram">
+    <None Include="Models\Models.edmx.diagram">
       <DependentUpon>Models.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -192,12 +206,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DBCreate.sql" />
-    <Content Include="Models.Context.tt">
+    <Content Include="Models\Models.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Models.edmx</DependentUpon>
       <LastGenOutput>Models.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models.tt">
+    <Content Include="Models\Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Models.edmx</DependentUpon>
       <LastGenOutput>Models.cs</LastGenOutput>

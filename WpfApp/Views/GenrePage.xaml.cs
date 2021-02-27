@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Entity;
+using WpfApp.Models;
 
 namespace WpfApp.Views {
     /// <summary>

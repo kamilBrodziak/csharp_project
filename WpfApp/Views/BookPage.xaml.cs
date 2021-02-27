@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Entity;
+using WpfApp.Models;
 
 namespace WpfApp.Views {
     /// <summary>
@@ -29,6 +30,15 @@ namespace WpfApp.Views {
         private void PageLoaded(object sender, RoutedEventArgs e) {
             _context.Books.Load();
             _viewSource.Source = _context.Books.Local;
+        }
+
+        private void detailsButton_Click(object sender, RoutedEventArgs e) {
+            int id = (int)((Button)sender).DataContext;
+            this.NavigationService.Navigate(new BookDetailsPage(id));
+        }
+
+        private void addBookButton_Click(object sender, RoutedEventArgs e) {
+            this.NavigationService.Navigate(new BookAddPage());
         }
     }
 }
